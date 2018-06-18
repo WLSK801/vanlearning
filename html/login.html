@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<!-- Meta, title, CSS, favicons, etc. -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Vanilla Learning | </title>
+
+		<!-- Bootstrap -->
+		<link href="main/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link href="main/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<!-- NProgress -->
+		<link href="main/vendors/nprogress/nprogress.css" rel="stylesheet">
+		<!-- Animate.css -->
+		<link href="main/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+		<!-- Custom Theme Style -->
+		<link href="main/build/css/custom.min.css" rel="stylesheet">
+		<!-- jQuery -->
+		<script src="main/vendors/jquery/dist/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+
+				$("#login-button").click(function() {
+					var params = {
+						loginname: $("#login-name").val(),
+						passw: $("#login-pass").val(),
+						token: grecaptcha.getResponse()
+					};
+					// set up ajax
+					//$.ajaxSetup({
+					//contentType : 'application/json'
+					//});
+
+					// AJAX post
+					$.ajax({
+						type: "POST",
+						url: "user/login.do",
+						data: params,
+						//dataType : 'json',
+						success: function(data) {
+							//alert("OK!");
+							if(data.code == '0') {
+								window.location.href = "./index.html";
+								alert("Success");
+							} else if (data.code == '1'){
+								window.location.reload();
+								alert("Your information does not exist");
+							}
+							else {
+								window.location.reload();
+								alert("Please do the Robot Test.");
+							}
+						},
+						error: function(data) {
+							alert("error");
+						}
+					});
+
+				});
+
+			});
+		</script>
+		<!-- google recaptcha -->
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	</head>
+
+	<body class="login">
+		<div>
+			<a class="hiddenanchor" id="signup"></a>
+			<a class="hiddenanchor" id="signin"></a>
+
+			<div class="login_wrapper">
+				<div class="animate form login_form">
+					<section class="login_content">
+						<form>
+							<h1>Login Form</h1>
+							<div>
+								<input id="login-name" type="text" class="form-control" placeholder="Username" required="" />
+							</div>
+							<div>
+								<input id="login-pass" type="password" class="form-control" placeholder="Password" required="" />
+							</div>
+							<div class="g-recaptcha" data-sitekey="6LelhC0UAAAAAHpMMiH4Xkq19W4kLdXgCDAf0GK8" id="recaptcha-token"></div>
+							<div>
+								<a class="btn btn-default submit" id="login-button">Log in</a>
+								<a class="reset_pass" href="#">Lost your password?</a>
+							</div>
+
+							<div class="clearfix"></div>
+
+							<div class="separator">
+								<p class="change_link">New to site?
+									<a href="#signup" class="to_register"> Create Account </a>
+								</p>
+
+								<div class="clearfix"></div>
+								<br />
+
+								<div>
+									<h1>Vanilla Learning</h1>
+									<p>Vanilla Learning is a online Saas platform for machine learning and data analysis</p>
+								</div>
+							</div>
+						</form>
+					</section>
+				</div>
+
+				<div id="register" class="animate form registration_form">
+					<section class="login_content">
+						<form>
+							<h1>Create Account</h1>
+							<div>
+								<input type="text" class="form-control" placeholder="Username" required="" />
+							</div>
+							<div>
+								<input type="email" class="form-control" placeholder="Email" required="" />
+							</div>
+							<div>
+								<input type="password" class="form-control" placeholder="Password" required="" />
+							</div>
+							<div>
+								<a class="btn btn-default submit" href="index.html">Submit</a>
+							</div>
+
+							<div class="clearfix"></div>
+
+							<div class="separator">
+								<p class="change_link">Already a member ?
+									<a href="#signin" class="to_register"> Log in </a>
+								</p>
+
+								<div class="clearfix"></div>
+								<br />
+
+								<div>
+									<h1>Vanilla Learning</h1>
+									<p>Vanilla Learning is a online Saas platform for machine learning and data analysis</p>
+								</div>
+							</div>
+						</form>
+					</section>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
